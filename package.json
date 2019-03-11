@@ -1,6 +1,6 @@
 {
-  "name": "vue-phaser3",
-  "description": "Template for working with Phaser 3 in a Vue project",
+  "name": "vue2-phaser3-webpack4",
+  "description": "Template for working with Phaser 3 in a Vue 2 project with webpack 4 and bootstrap 4",
   "keywords": [
     "vue",
     "phaser",
@@ -8,7 +8,7 @@
     "boilerplate"
   ],
   "author": "Markus Appel <markospoparkos@gmail.com>",
-  "version": "2.0.1",
+  "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
