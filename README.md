@@ -16,9 +16,14 @@ yarn install
 
 # serve with live reloading at localhost:9000
 npm run start
+# or
+yarn start
 
 # build for production with transpilation / minification
 npm run build
-
+#or
+yarn build
 
 ```
+
+The `buil`command will create a folder `dist`with the production version of the applications, that can be used to create a static web page (for exemple at [github.io](https://github.io))
