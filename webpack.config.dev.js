@@ -5,6 +5,12 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 
 module.exports = {
     devServer: {
@@ -15,9 +21,9 @@ module.exports = {
     },
     devtool: "source-map",
     watch: true,
-    entry: [
-        'bootstrap-loader', path.join(__dirname, './src/main.js')
-    ],
+    entry: {
+      app: './src/main.ts'
+    },
     output: {
         path: path.join(__dirname, 'dist'),
         filename: '[name].bundle.js'
@@ -25,59 +31,83 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Phaser + Vue Example',
-            template: path.join(__dirname, 'src/index.html'),
+            template: 'index.html',
+            inject: true
         }),
-        new webpack.DefinePlugin({
-            CANVAS_RENDERER: JSON.stringify(true),
-            WEBGL_RENDERER: JSON.stringify(true)
-        })
+        // copy custom static assets
+        new CopyWebpackPlugin([
+          {
+            from: path.resolve(__dirname, 'static'),
+            to: path.join(__dirname, 'dist/static'),
+            ignore: ['.*']
+          }
+        ]),
+        new VueLoaderPlugin()
     ],
-    resolve: {
-        extensions: ['.js', '.vue', '.json'],
+      resolve: {
+        extensions: ['.js', '.vue', '.json', '.ts'],
         alias: {
-            vue: 'vue/dist/vue.js',
-            '@': path.join(__dirname, 'src'),
+          'vue$': 'vue/dist/vue.esm.js',
+          '@': resolve('src'),
         }
-    },
+      },
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.(png|jpg|gif)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: 'images/[name].[ext]',
-                        },
-                    }
-                ]
-            },
-            {
-                test: /\.html$/i,
-                exclude: [path.join(__dirname, "src/index.html")],
-                include: [
-                    path.join(__dirname, "src/templates")
-                ],
-                use: 'raw-loader',
-            },
-            {
-                test: /\.(ogg|mp3)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: 'audio/[name].[ext]',
-                        },
-                    },
-                ],
+          {
+            test: /\.vue$/,
+            use: ['vue-loader']
+          }, {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader',
             }
+          },
+          {
+            test: /\.css$/,
+            use: [
+              'vue-style-loader',
+              'css-loader'
+            ]
+          }, {
+            test: /\.less$/,
+            use: [
+              'vue-style-loader',
+              'css-loader',
+              'less-loader'
+            ]
+          },
+          {
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                options: {
+                  appendTsSuffixTo: [/\.vue$/],
+                }
+              },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            loader: 'url-loader',
+            options: {
+              limit: 1,
+              name: 'img/[name].[hash:7].[ext]'
+            }
+          },
+          {
+            test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'media/[name].[hash:7].[ext]'
+            }
+          },
+          {
+            test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'fonts/[name].[hash:7].[ext]'
+            }
+          }
         ]
     }
 };
