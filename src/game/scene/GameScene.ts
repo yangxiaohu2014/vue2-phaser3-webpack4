@@ -21,13 +21,13 @@ class GameScene extends Phaser.Scene {
 
   //loading
   preload(): void {
-    this.load.image("map", require("@/game/res/map.png"));
-    this.load.image("player", require("@/game/res/player.png"));
-    this.load.image("bullet", require("@/game/res/playerbullet.png"));
-    // this.load.image("enemy", require("@/game/res/enemy.png"))
-    this.load.image("enemybullet", require("@/game/res/enemybullet.png"))
-    this.load.spritesheet("enemy", require("@/game/res/enemy_duck.png"), {frameWidth:54, frameHeight:41, endFrame:9})
-    this.load.spritesheet("boom", require("@/game/res/boom.png"), {frameWidth:98, frameHeight:97, endFrame:13})
+    this.load.image("map", require("@/assets/game/map.png"));
+    this.load.image("player", require("@/assets/game/player.png"));
+    this.load.image("bullet", require("@/assets/game/playerbullet.png"));
+    // this.load.image("enemy", require("@/assets/game/enemy.png"))
+    this.load.image("enemybullet", require("@/assets/game/enemybullet.png"))
+    this.load.spritesheet("enemy", require("@/assets/game/enemy_duck.png"), {frameWidth:54, frameHeight:41, endFrame:9})
+    this.load.spritesheet("boom", require("@/assets/game/boom.png"), {frameWidth:98, frameHeight:97, endFrame:13})
   }
 
   //create

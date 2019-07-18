@@ -1,4 +1,4 @@
-import Bullet from './Bullet'
+  import Bullet from './Bullet'
 import Plane from './Plane'
 class Player extends Plane {
     constructor(scene:Phaser.Scene, x:number, y:number, key:string) {

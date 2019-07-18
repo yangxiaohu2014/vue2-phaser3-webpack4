@@ -1,10 +1,10 @@
 import "phaser";
-import CONFIG from "./tool/Config";
-import GameScene from "./scene/GameScene";
+import CONFIG from "./tool/Config"
+import GameScene from "./scene/GameScene"
 
 const config: GameConfig = {
-  width: 320,
-  height: 682,
+  width: CONFIG.WIDTH,
+  height: CONFIG.HEIGHT,
   type: Phaser.AUTO,
   parent: "cvs",
   scene: [GameScene],
@@ -16,11 +16,8 @@ const config: GameConfig = {
     }
   }
 };
-export class Game extends Phaser.Game {
-  constructor(config: GameConfig) {
+export default class Index extends Phaser.Game {
+  constructor() {
     super(config);
   }
 }
-window.onload = () => {
-  new Game(config);
-};
